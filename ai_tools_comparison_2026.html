@@ -1,0 +1,339 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.container { padding: 1rem 0; }
+.tab-bar { display: flex; gap: 6px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.tab { padding: 6px 14px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-secondary); color: var(--color-text-secondary); font-size: 13px; cursor: pointer; transition: all .15s; }
+.tab.active { background: var(--color-text-primary); color: var(--color-background-primary); border-color: var(--color-text-primary); }
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.1rem 1.25rem; }
+.card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.logo { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 500; flex-shrink: 0; }
+.card-name { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+.card-maker { font-size: 12px; color: var(--color-text-secondary); }
+.badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-bottom: 10px; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-secondary); }
+.section-label { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 4px; margin-top: 10px; letter-spacing: .04em; }
+.feature-list { list-style: none; }
+.feature-list li { font-size: 13px; color: var(--color-text-secondary); padding: 2px 0; display: flex; align-items: flex-start; gap: 6px; }
+.feature-list li::before { content: '·'; color: var(--color-text-tertiary); flex-shrink: 0; }
+.price-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+.price-table th { text-align: left; color: var(--color-text-tertiary); font-weight: 400; padding: 3px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.price-table td { padding: 4px 0; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); }
+.price-table td:last-child { text-align: right; font-weight: 500; color: var(--color-text-primary); }
+.price-table tr:last-child td { border-bottom: none; }
+.highlight { border: 1.5px solid var(--color-border-info) !important; }
+.popular-badge { background: var(--color-background-info); color: var(--color-text-info); font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-left: auto; }
+.compare-wrap { overflow-x: auto; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 560px; }
+.compare-table th { padding: 8px 10px; text-align: left; background: var(--color-background-secondary); color: var(--color-text-secondary); font-weight: 500; border-bottom: 0.5px solid var(--color-border-secondary); white-space: nowrap; }
+.compare-table td { padding: 8px 10px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); vertical-align: middle; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table .tool-name { font-weight: 500; color: var(--color-text-primary); display: flex; align-items: center; gap: 7px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.free-tag { font-size: 11px; color: var(--color-text-success); background: var(--color-background-success); padding: 1px 7px; border-radius: 8px; }
+.paid-tag { font-size: 11px; color: var(--color-text-warning); background: var(--color-background-warning); padding: 1px 7px; border-radius: 8px; }
+</style>
+<div class="container">
+  <div class="tab-bar">
+    <button class="tab active" onclick="showTab('cards')">툴별 상세</button>
+    <button class="tab" onclick="showTab('compare')">한눈에 비교</button>
+    <button class="tab" onclick="showTab('price')">요금제 표</button>
+  </div>
+
+  <!-- CARDS VIEW -->
+  <div id="tab-cards">
+    <div class="tool-grid">
+
+      <!-- ChatGPT -->
+      <div class="card highlight">
+        <div class="card-header">
+          <div class="logo" style="background:#10a37f22;color:#10a37f;">GPT</div>
+          <div><div class="card-name">ChatGPT</div><div class="card-maker">OpenAI</div></div>
+          <span class="popular-badge">가장 인기</span>
+        </div>
+        <div class="tag-row">
+          <span class="tag">범용</span><span class="tag">이미지생성</span><span class="tag">코딩</span><span class="tag">메모리</span>
+        </div>
+        <div class="section-label">특징</div>
+        <ul class="feature-list">
+          <li>가장 넓은 사용자층, 다양한 업무에 범용적</li>
+          <li>DALL-E 이미지 생성 내장</li>
+          <li>대화 기억 기능(Memory)으로 맞춤화</li>
+          <li>Microsoft 365, Slack 등 외부 연동 풍부</li>
+          <li>Canvas로 문서 실시간 협업 가능</li>
+        </ul>
+        <div class="section-label" style="margin-top:12px;">요금제</div>
+        <table class="price-table">
+          <tr><th>플랜</th><th>월 요금</th></tr>
+          <tr><td>Free</td><td><span class="free-tag">무료</span></td></tr>
+          <tr><td>Go</td><td>$8</td></tr>
+          <tr><td>Plus</td><td>$20</td></tr>
+          <tr><td>Team</td><td>$25~30/인</td></tr>
+          <tr><td>Pro</td><td>$200</td></tr>
+        </table>
+      </div>
+
+      <!-- Claude -->
+      <div class="card">
+        <div class="card-header">
+          <div class="logo" style="background:#d97a4022;color:#d97a40;">Cl</div>
+          <div><div class="card-name">Claude</div><div class="card-maker">Anthropic</div></div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">글쓰기</span><span class="tag">코딩</span><span class="tag">분석</span><span class="tag">긴문서</span>
+        </div>
+        <div class="section-label">특징</div>
+        <ul class="feature-list">
+          <li>자연스러운 문체로 글쓰기·분석 최강</li>
+          <li>100만 토큰 컨텍스트 창(긴 문서 처리)</li>
+          <li>안전성·윤리 중심 설계</li>
+          <li>Artifacts로 코드·문서 시각화</li>
+          <li>코딩 도구(Cursor, Windsurf 등) 많이 채택</li>
+        </ul>
+        <div class="section-label" style="margin-top:12px;">요금제</div>
+        <table class="price-table">
+          <tr><th>플랜</th><th>월 요금</th></tr>
+          <tr><td>Free</td><td><span class="free-tag">무료</span></td></tr>
+          <tr><td>Pro</td><td>$20</td></tr>
+          <tr><td>Team</td><td>$30/인</td></tr>
+          <tr><td>Max (5×)</td><td>$100</td></tr>
+          <tr><td>Max (20×)</td><td>$200</td></tr>
+        </table>
+      </div>
+
+      <!-- Gemini -->
+      <div class="card">
+        <div class="card-header">
+          <div class="logo" style="background:#4285f422;color:#4285f4;">G</div>
+          <div><div class="card-name">Gemini</div><div class="card-maker">Google</div></div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">멀티모달</span><span class="tag">실시간검색</span><span class="tag">Google연동</span>
+        </div>
+        <div class="section-label">특징</div>
+        <ul class="feature-list">
+          <li>Google 검색 기반 실시간 최신 정보 제공</li>
+          <li>Gmail·Docs·Sheets 등 Workspace 내장</li>
+          <li>영상·음성·이미지 처리(멀티모달) 강점</li>
+          <li>100만~200만 토큰 대형 컨텍스트 창</li>
+          <li>Ultra는 YouTube Premium 등 구글 서비스 번들</li>
+        </ul>
+        <div class="section-label" style="margin-top:12px;">요금제</div>
+        <table class="price-table">
+          <tr><th>플랜</th><th>월 요금</th></tr>
+          <tr><td>Free</td><td><span class="free-tag">무료</span></td></tr>
+          <tr><td>AI Pro (Advanced)</td><td>$19.99</td></tr>
+          <tr><td>AI Ultra</td><td>$249.99</td></tr>
+        </table>
+      </div>
+
+      <!-- Genspark -->
+      <div class="card">
+        <div class="card-header">
+          <div class="logo" style="background:#7c3aed22;color:#7c3aed;">Gs</div>
+          <div><div class="card-name">Genspark</div><div class="card-maker">Genspark AI</div></div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">올인원</span><span class="tag">PPT생성</span><span class="tag">멀티AI</span><span class="tag">에이전트</span>
+        </div>
+        <div class="section-label">특징</div>
+        <ul class="feature-list">
+          <li>GPT·Claude·Gemini 등 여러 AI를 동시 활용</li>
+          <li>채팅·이미지·PPT·영상·데이터분석 올인원</li>
+          <li>크레딧 기반 소비 모델(작업 난이도별 차감)</li>
+          <li>AI 채팅·이미지 생성은 유료 구독 시 무제한</li>
+          <li>"에이전틱 AI"로 복잡한 멀티스텝 작업 자동화</li>
+        </ul>
+        <div class="section-label" style="margin-top:12px;">요금제</div>
+        <table class="price-table">
+          <tr><th>플랜</th><th>월 요금</th></tr>
+          <tr><td>Free</td><td><span class="free-tag">무료 (100크레딧/일)</span></td></tr>
+          <tr><td>Plus (월간)</td><td>$24.99</td></tr>
+          <tr><td>Plus (연간)</td><td>$19.99</td></tr>
+        </table>
+      </div>
+
+      <!-- Grok -->
+      <div class="card">
+        <div class="card-header">
+          <div class="logo" style="background:#00000015;color:var(--color-text-primary);">Gr</div>
+          <div><div class="card-name">Grok</div><div class="card-maker">xAI (Elon Musk)</div></div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">실시간X피드</span><span class="tag">추론</span><span class="tag">대용량컨텍스트</span>
+        </div>
+        <div class="section-label">특징</div>
+        <ul class="feature-list">
+          <li>X(트위터) 실시간 데이터 접근 강점</li>
+          <li>200만 토큰 최대 컨텍스트 창(최상위권)</li>
+          <li>환각률(Hallucination) ~4%로 낮은 편</li>
+          <li>수학·과학·코딩 벤치마크 상위권</li>
+          <li>개성 있고 거침없는 스타일</li>
+        </ul>
+        <div class="section-label" style="margin-top:12px;">요금제</div>
+        <table class="price-table">
+          <tr><th>플랜</th><th>월 요금</th></tr>
+          <tr><td>Free (X 기본)</td><td><span class="free-tag">무료(제한)</span></td></tr>
+          <tr><td>X Premium+</td><td>$40</td></tr>
+          <tr><td>SuperGrok</td><td>$30</td></tr>
+          <tr><td>SuperGrok Heavy</td><td>$300</td></tr>
+        </table>
+      </div>
+
+      <!-- Perplexity -->
+      <div class="card">
+        <div class="card-header">
+          <div class="logo" style="background:#20808022;color:#208080;">Px</div>
+          <div><div class="card-name">Perplexity</div><div class="card-maker">Perplexity AI</div></div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">리서치</span><span class="tag">출처인용</span><span class="tag">멀티모델</span>
+        </div>
+        <div class="section-label">특징</div>
+        <ul class="feature-list">
+          <li>출처를 인용하며 답변하는 "답변 엔진"</li>
+          <li>Pro는 GPT·Claude·Gemini 등 여러 모델 선택 가능</li>
+          <li>팩트체크·최신 정보 확인에 특화</li>
+          <li>Deep Research로 심층 조사 보고서 생성</li>
+          <li>기자·연구자·학생에게 인기</li>
+        </ul>
+        <div class="section-label" style="margin-top:12px;">요금제</div>
+        <table class="price-table">
+          <tr><th>플랜</th><th>월 요금</th></tr>
+          <tr><td>Free</td><td><span class="free-tag">무료</span></td></tr>
+          <tr><td>Pro</td><td>$20</td></tr>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMPARE VIEW -->
+  <div id="tab-compare" style="display:none;">
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>툴</th>
+            <th>핵심 강점</th>
+            <th>약점</th>
+            <th>추천 대상</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#10a37f;"></span>ChatGPT</div></td>
+            <td>범용·이미지생성·외부연동</td>
+            <td>지식 컷오프, 무료 제한 큼</td>
+            <td>처음 쓰는 사람, 다목적 업무</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#d97a40;"></span>Claude</div></td>
+            <td>글쓰기·코딩·긴 문서 분석</td>
+            <td>이미지 생성 없음, 응답 느릴 수 있음</td>
+            <td>작가·개발자·리서처</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#4285f4;"></span>Gemini</div></td>
+            <td>실시간 검색·Google 생태계 통합</td>
+            <td>생태계 밖 연동 제한, 품질 편차</td>
+            <td>Google Workspace 사용자</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#7c3aed;"></span>Genspark</div></td>
+            <td>올인원(PPT·영상·분석 통합)</td>
+            <td>크레딧 소진, 상대적으로 신생</td>
+            <td>PPT·자료 제작 많은 직장인</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#555;"></span>Grok</div></td>
+            <td>실시간 X피드·대용량 컨텍스트·낮은 환각률</td>
+            <td>X 플랫폼 의존, 가격 다소 높음</td>
+            <td>소셜·트렌드 모니터링, 연구자</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#208080;"></span>Perplexity</div></td>
+            <td>출처 인용 리서치, 팩트체크</td>
+            <td>창작·코딩 등 생성 기능 약함</td>
+            <td>기자·학생·팩트체커</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PRICE VIEW -->
+  <div id="tab-price" style="display:none;">
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>툴</th>
+            <th>무료</th>
+            <th>기본 유료</th>
+            <th>중간 유료</th>
+            <th>최상위</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#10a37f;"></span>ChatGPT</div></td>
+            <td><span class="free-tag">무료</span></td>
+            <td><span class="paid-tag">$8 Go</span></td>
+            <td><span class="paid-tag">$20 Plus</span></td>
+            <td>$200 Pro</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#d97a40;"></span>Claude</div></td>
+            <td><span class="free-tag">무료</span></td>
+            <td><span class="paid-tag">$20 Pro</span></td>
+            <td>$100 Max</td>
+            <td>$200 Max</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#4285f4;"></span>Gemini</div></td>
+            <td><span class="free-tag">무료</span></td>
+            <td><span class="paid-tag">$19.99 AI Pro</span></td>
+            <td>—</td>
+            <td>$249.99 Ultra</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#7c3aed;"></span>Genspark</div></td>
+            <td><span class="free-tag">무료 (100크레딧/일)</span></td>
+            <td><span class="paid-tag">$19.99 Plus(연간)</span></td>
+            <td>$24.99 Plus(월간)</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#555;"></span>Grok</div></td>
+            <td><span class="free-tag">무료(제한)</span></td>
+            <td><span class="paid-tag">$30 SuperGrok</span></td>
+            <td>$40 X Premium+</td>
+            <td>$300 Heavy</td>
+          </tr>
+          <tr>
+            <td><div class="tool-name"><span class="dot" style="background:#208080;"></span>Perplexity</div></td>
+            <td><span class="free-tag">무료</span></td>
+            <td><span class="paid-tag">$20 Pro</span></td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-tertiary);margin-top:12px;">* 환율 약 1,450원 기준 / $20 ≈ 약 29,000원. 가격은 변동될 수 있습니다.</p>
+  </div>
+</div>
+<script>
+function showTab(name) {
+  ['cards','compare','price'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t === name ? '' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach((btn, i) => {
+    btn.classList.toggle('active', ['cards','compare','price'][i] === name);
+  });
+}
+</script>
